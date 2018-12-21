@@ -10,26 +10,7 @@ import java.math.BigInteger;
 
 public class Fibo {
 
-    private static BigInteger potegowanie(int podstawa, int n) {
-        BigInteger x = BigInteger.valueOf(podstawa);
-        //BigInteger n = BigInteger.valueOf(wykladnik);
-
-        BigInteger wynik = BigInteger.ONE;
-
-        while (n > 0) {
-            if (n % 2 == 0) {
-                n = n / 2;
-                x = x.multiply(x);
-            } else {
-                n = n - 1;
-                wynik = wynik.multiply(x);
-            }
-        }
-
-        return wynik;
-    }
-
-    private static BigInteger[][] pomnozMacierzPrzezJednokolumnowa(BigInteger[][] A, BigInteger[][] B) {
+    private static BigInteger[][] pomnozKwadratowaPrzezJednokolumnowa(BigInteger[][] A, BigInteger[][] B) {
         BigInteger[][] wynik = new BigInteger[2][1];
 
         wynik[0][0] = (A[0][0].multiply(B[0][0])).add(A[0][1].multiply(B[1][0]));
@@ -72,40 +53,8 @@ public class Fibo {
     }
 
     public static void main(String[] args) {
-//        System.out.println(potegowanie(10, 9));
 
-        /*BigInteger[][] A = new BigInteger[2][2];
-        A[0][0] = BigInteger.ZERO;
-        A[1][0] = BigInteger.ONE;
-        A[0][1] = BigInteger.ONE;
-        A[1][1] = BigInteger.ONE;
-
-        BigInteger[][] B = new BigInteger[2][1];
-        B[0][0] = BigInteger.ZERO;
-        B[1][0] = BigInteger.ONE;
-
-        BigInteger[][] pomnozoneMacierze = pomnozMacierzPrzezJednokolumnowa(A, B);
-        System.out.println(pomnozoneMacierze[0][0] + ", " + pomnozoneMacierze[1][0]);*/
-
-        /*BigInteger[][] A = new BigInteger[2][2];
-        A[0][0] = BigInteger.ZERO;
-        A[0][1] = BigInteger.ONE;
-        A[1][0] = BigInteger.ONE;
-        A[1][1] = BigInteger.ONE;
-
-
-        BigInteger[][] B = new BigInteger[2][2];
-        B[0][0] = BigInteger.ZERO;
-        B[0][1] = BigInteger.ONE;
-        B[1][0] = BigInteger.ONE;
-        B[1][1] = BigInteger.ONE;
-
-        BigInteger[][] pomnozoneMacierze = pomnozMacierzeKwadratowe(A, B);
-
-        System.out.println(pomnozoneMacierze[0][0] + ", " + pomnozoneMacierze[0][1]);
-        System.out.println(pomnozoneMacierze[1][0] + ", " + pomnozoneMacierze[1][1]);*/
-
-        int n = 1000000; // prawie 10 milionów
+        int n = 1000000; // liczy bez większego problemu nawet dla 9 999 999
 
         BigInteger[][] A = new BigInteger[2][2];
         A[0][0] = BigInteger.ZERO;
@@ -120,30 +69,27 @@ public class Fibo {
         B[1][0] = BigInteger.ONE;
 
         long przed = System.currentTimeMillis();
-        BigInteger[][] wyniki = pomnozMacierzPrzezJednokolumnowa(spotegowanaMacierz, B);
+        BigInteger[][] wyniki = pomnozKwadratowaPrzezJednokolumnowa(spotegowanaMacierz, B);
 
-        //System.out.println(wyniki[0][0] + " <--- to jest główny wynik");
-        System.out.println(wyniki[1][0]);
+        System.out.println("MACIERZE wynik: " + wyniki[1][0]);
 
-//        System.out.println(zwyczajnyCiagFibo(9999999)); // prawie 10 milionów
         long po = System.currentTimeMillis();
 
-        System.out.println("czas: " + (po - przed)); //3048 4549 7322
+        System.out.println("MACIERZE czas: " + (po - przed));
 
 
         przed = System.currentTimeMillis();
-        System.out.println(zwyczajnyCiagFibo(1000000)); //dla n=43 to około 11 sekund
+        System.out.println("PĘTLA wynik: " + zwyczajnyCiagFibo(n));
         po = System.currentTimeMillis();
 
-        System.out.println("czas: " + (po - przed)); //3048 4549 7322
+        System.out.println("PĘTLA czas: " + (po - przed));
 
 
         przed = System.currentTimeMillis();
-        System.out.println(rekurencyjnyCiagFibo(43)); //dla n=43 to około 11 sekund
+        System.out.println("REKURENCJA wynik: " + rekurencyjnyCiagFibo(45));
         po = System.currentTimeMillis();
 
-        System.out.println("czas: " + (po - przed)); //3048 4549 7322
-
+        System.out.println("REKURENCJA czas: " + (po - przed));
 
     }
 
